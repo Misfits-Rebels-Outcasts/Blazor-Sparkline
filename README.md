@@ -7,7 +7,10 @@ Open Source Sparkline Charts for Blazor and WebAssembly. It uses C#, HTML and CS
 <img width="206" height="106"  src=https://webassemblyman.com/blazor/images/blazorsparkline.png />
 </p>   
 
-The sparkline is uniquely generated using Open Type Fonts.  
+Sparklines are typically used to display summary information and they commonly appear in multiple of a HTML table. 
+This component uses Open Type Fonts and does not require a SVG or Canvas element. The font is downloaded once amd then used to display the charts multiple times.
+
+The current font uses dots to chart each segment of the Sparkline and is useful when you have many data points. The width of each segment can be specified by using the SegmentWidth parameter. A bigger SegmentWidth results in a longer Sparkline. It also means more data characters need to be generated to display the Sparkline using the font. Additional fonts will be added to support specific SegmentWidth instead of just a dot. This enables the the reduction of data characters generated.
 
 &num;elegantlysimple
 
