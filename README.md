@@ -1,7 +1,13 @@
 # Blazor-Sparkline
 Sparkline Charts for Blazor using Fonts
 
-Open Source Sparkline Charts for Blazor and WebAssembly. It uses C#, HTML and CSS with minimal Javascript dependencies. The sparkline is uniquely generated using Open Type Fonts.  
+Open Source Sparkline Charts for Blazor and WebAssembly. It uses C#, HTML and CSS with minimal Javascript dependencies. 
+
+<p>
+<img width="206" height="106"  src=https://webassemblyman.com/blazor/images/blazorsparkline.png />
+</p>   
+
+The sparkline is uniquely generated using Open Type Fonts.  
 
 &num;elegantlysimple
 
