@@ -24,11 +24,11 @@ To use the Sparkline
 
 2. In YourProject.csproj, add
 
-&lt;ProjectReference Include="../Blazor-Sparkline/Blazor-Sparkline.csproj" />
+&lt;ProjectReference Include="../Blazor-Sparkline/Sparkline/Sparkline.csproj" />
 
 3. In index.html, add
 
-&lt;link href="_content/Blazor-Sparkline/styles.css" rel="stylesheet" />
+&lt;link href="_content/Sparkline/styles.css" rel="stylesheet" />
 
 4. Finally, in Pages->Index.razor, add
 
