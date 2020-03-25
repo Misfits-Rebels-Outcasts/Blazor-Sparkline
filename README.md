@@ -36,4 +36,26 @@ To use the Sparkline
   InputData="[30,0,6,20,45,48,51,60,76,77,78,79,90,100,30,90,95,100,40,0,0,0],<br />[80,0,16,25,48,45,1,0,6,37,78,79,90,90,91,95,80,0,40,0,0,0]" <br />StartColor="#ce4b99" StopColor="#377bbc" SegmentWidth="30"><br />
 &lt;/SparklineMan>
 
+To use the Column Bars
+
+<p>
+<img width="122" height="109"  src=https://webassemblyman.com/blazor/images/blazorcolumnbars.png />
+</p>   
+
+1. Create your Blazor project.
+
+2. In YourProject.csproj, add
+
+&lt;ProjectReference Include="../Blazor-Sparkline/ColumnBars/ColumnBars.csproj" />
+
+3. In index.html, add
+
+&lt;link href="_content/ColumnBars/styles.css" rel="stylesheet" />
+
+4. Finally, in Pages->Index.razor, add
+
+&lt;ColumnBarsMan <br /> 
+InputData="[21,30,111,114,140,158,206,249,262,266,285,340,428,81,206,249,262,440,158,206,249,262,266,285,340,428], <br />[27,29,95,216,228,242,287,362,369,372,380,433,479,206,249,262,114,540,558,206,249,362,266,285,340,428], <br />[21,30,111,114,140,158,206,249,262,266,285,340,428,81,206,249,262,440,158,206,249,262,266,285,340,428], <br />[27,29,95,216,228,242,287,362,369,372,380,433,479,206,249,262,114,540,558,206,249,362,266,285,340,428]">
+&lt;/ColumnBarsMan>
+
 Alternatively, check out our Elegantly Simple [Misfits-Rebels-Outcasts/Blazor-Dashboard](https://github.com/Misfits-Rebels-Outcasts/Blazor-Dashboard) project on how to use this Blazor Sparkline component.
