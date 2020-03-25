@@ -24,7 +24,7 @@ To use the Sparkline
 
 2. In YourProject.csproj, add
 
-&lt;ProjectReference Include="../Blazor-Sparkline/Sparklines/Sparkline.csproj" />
+&lt;ProjectReference Include="../Blazor-Sparkline/Sparklines/Sparklines.csproj" />
 
 3. In index.html, add
 
