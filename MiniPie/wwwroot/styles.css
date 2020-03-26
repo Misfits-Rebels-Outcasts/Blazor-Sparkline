@@ -2,7 +2,7 @@
     This file is to show how CSS and other static resources (such as images) can be
     used from a library project/package.
 */
-
+/*
 .my-component {
     border: 2px dashed red;
     padding: 1em;
@@ -64,3 +64,43 @@ figure {
         font-size: 18px;
     }
 }
+*/
+
+@font-face {
+    font-family: MiniPie;
+    src: url("SparkCodePies 2.0.ttf") format("truetype");
+}
+
+.MiniPie {
+    font-weight: normal;
+    font-style: normal;
+    line-height: normal;
+    font-family: 'MiniPie', sans-serif;
+    font-size: 32px;
+    animation: pulse;
+}
+
+.MiniPie .seg-1{    
+    color:#ce4b99
+}
+
+.MiniPie .seg-2{    
+    color:#27A844
+}
+
+.MiniPie .seg-3{    
+    color:#377bbc
+}
+
+.MiniPie .seg-4{    
+    color:#fe2712
+}
+
+.MiniPie .seg-5{    
+    color:#fc600a
+}
+
+.MiniPie .seg-6{    
+    color:#fb9902
+}
+

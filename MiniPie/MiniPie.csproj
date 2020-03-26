@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
-    <RootNamespace>Blazor_WinLoss</RootNamespace>
+    <RootNamespace>Blazor_MiniPie</RootNamespace>
   </PropertyGroup>
 
 
