@@ -12,27 +12,37 @@ using WebAssemblyMan.Charts;
 
 namespace WebAssemblyMan
 {
-    public class WinLossMan :ComponentBase
+    public class WinLoss :ComponentBase
     {
         [Parameter]
         public string InputData { get; set; }
 
-        private string[] sparklineOutput;
+        [Parameter]
+        public bool GenerateText { get; set; }
+
+        private string winLossOutput;
 
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
             var seq = 0;
-            WinLoss winLoss = new WinLoss();
-            winLoss.InputData = InputData;
-            sparklineOutput = winLoss.Encode();
+            WinLossFont winLossFont = new WinLossFont();
+            winLossFont.InputData = InputData;
+            winLossFont.GenerateText=GenerateText;
+            winLossOutput = winLossFont.Encode();
 
+
+            builder.OpenElement(++seq, "span");
+            builder.AddAttribute(++seq, "class", "WinLoss");
+            builder.AddMarkupContent(++seq, winLossOutput);
+            builder.CloseElement();
+
+/*
             builder.OpenElement(seq, "figure");
             builder.OpenElement(++seq, "div");
             builder.AddAttribute(++seq, "class", "winloss-main");
 
-            foreach (string sline in sparklineOutput)
+            foreach (string sline in winLossOutput)
             {
-
                 builder.OpenElement(++seq, "span");
                 builder.AddAttribute(++seq, "class", "WinLoss");
                 string slineu = sline + "<br />";
@@ -41,6 +51,7 @@ namespace WebAssemblyMan
             }
             builder.CloseElement();
             builder.CloseElement();
+*/
 
         }
     }

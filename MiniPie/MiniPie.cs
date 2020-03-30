@@ -14,6 +14,9 @@ namespace WebAssemblyMan
         [Parameter]
         public string InputData { get; set; }
 
+        [Parameter]
+        public bool GenerateText { get; set; }
+
         private string miniPieOutput;
 
         protected override void BuildRenderTree(RenderTreeBuilder builder)
@@ -21,6 +24,7 @@ namespace WebAssemblyMan
             var seq = 0;
             MiniPieFont miniPieFont = new MiniPieFont();
             miniPieFont.InputData = InputData;
+            miniPieFont.GenerateText = GenerateText;
             miniPieOutput = miniPieFont.Encode();            
 
 /*

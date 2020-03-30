@@ -2,7 +2,7 @@
     This file is to show how CSS and other static resources (such as images) can be
     used from a library project/package.
 */
-
+/*
 .my-component {
     border: 2px dashed red;
     padding: 1em;
@@ -63,4 +63,56 @@ figure {
     100% {
         font-size: 18px;
     }
+}
+*/
+
+
+@font-face {
+    font-family: BulletBars;
+    src: url("SparkCodeBullet 2.0.ttf") format("truetype");
+}
+
+.BulletBars {
+    font-weight: normal;
+    font-style: normal;
+    line-height: normal;
+    font-family: 'BulletBars', sans-serif;
+    font-size: 18px;
+}
+
+.BulletBars .bar-actual{    
+    color:#000000
+}
+
+.BulletBars .bar-target{    
+    color:#000000
+}
+
+.BulletBars .bar-1{    
+    color:#F2F2F2
+}
+
+.BulletBars .bar-2{    
+    color:#D8D8D8
+}
+.BulletBars .bar-3{    
+    color:#BFBFBF
+}
+.BulletBars .bar-4{    
+    color:#A5A5A5
+}
+
+.BulletBars .bar-5{    
+    color:#7F7F7F
+}
+
+.BulletBars .text-actual-target{    
+    font-family:sans-serif;
+    font-size:18px;
+    color:#000000;
+    height: 16px; 
+    display: table-cell;
+    vertical-align: middle;
+    padding:5px;
+
 }

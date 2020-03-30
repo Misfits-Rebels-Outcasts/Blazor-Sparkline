@@ -10,28 +10,29 @@ using System.Threading.Tasks;
 
 namespace WebAssemblyMan.Charts
 {
-  public class Sparkline
+  public class SparklineFont
   {
         public string InputData { get; set; }
-        public string StartColor { get; set; }
-        public string StopColor { get; set; }
+        //public string StartColor { get; set; }
+        //public string StopColor { get; set; }
+        public bool GenerateText { get; set; }
         public string SegmentWidth { get; set; }
 
         public double Min { get; set; }
         public double Max { get; set; }
         public int NumLines { get; set; }
-        public string[] result;
+        public string result;
 
-        public Sparkline() { }
-        public string[] Encode()
+        public SparklineFont() { }
+        public string Encode()
         {
             //Add verification code in the future for all parameters
             //Or maybe change width etc.. to a number
-            DrawSparklines();
-            return result;
+            return DrawSparkline(InputData);
+            //return result;
             //return sparklineStr;
         }
-
+/*
         private void DrawSparklines()
         {
             //not very optimal to be improved.
@@ -50,17 +51,20 @@ namespace WebAssemblyMan.Charts
             }
             
         }
+*/
 
+        private string[] inputDataArr;
         private string DrawSparkline(string inputLine)
         {
             double min = double.MaxValue, max = double.MinValue;
-            string[] inputDataArr = inputLine.Split(',');
+            inputDataArr = inputLine.Split(',');
             string sparklineStr = "";
 
             for (int x = 0; x < inputDataArr.Length; x++)
             {
                 double val = double.Parse(inputDataArr[x]);
-                min = val;
+                if (min > val)
+                    min = val;
                 if (max < val)
                     max = val;
             }
@@ -76,11 +80,11 @@ namespace WebAssemblyMan.Charts
                     pcy0 = double.Parse(inputDataArr[y]) / max * 100;
                     pcy1 = double.Parse(inputDataArr[y + 1]) / max * 100;
                     if (y == 0)
-                        sparklineStr=drawLine(pcy0, pcy1, 0, sparklineStr);
+                        sparklineStr=drawLine(pcy0, pcy1, 0, sparklineStr,y);
                     else if (y + 1 == inputDataArr.Length - 1)
-                        sparklineStr=drawLine(pcy0, pcy1, 1, sparklineStr);
+                        sparklineStr=drawLine(pcy0, pcy1, 1, sparklineStr,y);
                     else
-                        sparklineStr=drawLine(pcy0, pcy1, -1, sparklineStr);
+                        sparklineStr=drawLine(pcy0, pcy1, -1, sparklineStr,y);
                 }
             }
             //Console.WriteLine("*---->:" + sparklineStr);
@@ -88,20 +92,19 @@ namespace WebAssemblyMan.Charts
             return sparklineStr;
         }
 
-        string drawLine(double y0, double y1, int startStop,string sparklineStr)
+        string drawLine(double y0, double y1, int startStop,string sparklineStr, int index)
         {
             int width = int.Parse(SegmentWidth);
             y0 = Math.Round(y0 / 2);
             y1 = Math.Round(y1 / 2);
 
-            sparklineStr=line(0, (int)y0, width, (int)y1, startStop, sparklineStr);
+            sparklineStr=line(0, (int)y0, width, (int)y1, startStop, sparklineStr,index);
             return sparklineStr;
         }
 
         //Bresenham Algorithm
-        string line(int x0, int y0, int x1, int y1, int startStop, string sparklineStr)
+        string line(int x0, int y0, int x1, int y1, int startStop, string sparklineStr, int index)
         {
-
             int dx = Math.Abs(x1 - x0);
             int dy = Math.Abs(y1 - y0);
             int sx = (x0 < x1) ? 1 : -1;
@@ -112,26 +115,36 @@ namespace WebAssemblyMan.Charts
 
             while (true)
             {
-
+                //start
                 if (startStop == 0)
                 {
                     if (firstTime)
                     {
                         firstTime = false;
-                        string startStr = "<span style=\"font-family:sans-serif;font-size:14\">" + y0.ToString() + "</span><span style=\"font-family:sans-serif;font-size:14\">&nbsp;&nbsp;</span>";
-
+                        /*
+                        string startStr = "<span class=text-start>" + y0.ToString() + "&nbsp;&nbsp;</span>";
                         string charStr = "&#" + (y0 + 64090).ToString() + ";";
-                        sparklineStr = sparklineStr+startStr+"<span style=\"color:"+StopColor+"\">"+charStr+"</span>";
+                        sparklineStr = sparklineStr+startStr+"<span class=sparkline-start>"+charStr+"</span>";
+                        */
 
-                        //sparklineStr = sparklineStr + "&#" + (y0 + 64090).ToString() + ";";
-                        //Console.WriteLine("SSparkline:" + sparklineStr);
+                        string startStr = "<span class=text-start>" + inputDataArr[index].ToString() + "&nbsp;&nbsp;</span>";
+                        string charStr = "&#" + (y0 + 64090).ToString() + ";";
+                        if (GenerateText)
+                            sparklineStr = sparklineStr+startStr+"<span class=sparkline-start>"+charStr+"</span>";
+                        else
+                            sparklineStr = sparklineStr+"<span class=sparkline-start>"+charStr+"</span>";
+                        
                     }
                 }
 
                 if (x0 > px)
+                {
                     sparklineStr = sparklineStr + "&#" + (y0 + 48).ToString() + ";"; //shift width     
+                }
                 else
+                {
                     sparklineStr = sparklineStr + "&#" + (y0 + 176).ToString() + ";"; //noshift width     
+                }
 
                 px = x0;
 
@@ -140,15 +153,18 @@ namespace WebAssemblyMan.Charts
                 if (e2 > -dy) { err -= dy; x0 += sx; }
                 if (e2 < dx) { err += dx; y0 += sy; }
             }
+            //stop
             if (startStop == 1)
             {
-                string stopStr = "<span style=\"font-family:sans-serif;font-size:14\">&nbsp;&nbsp;" + y0.ToString() + "&nbsp;</span>";
+                //string stopStr = "<span class=text-stop>&nbsp;&nbsp;" + y0.ToString() + "&nbsp;</span>";
+                string stopStr = "<span class=text-stop>&nbsp;&nbsp;" + inputDataArr[index+1].ToString() + "&nbsp;</span>";                
                 string charStr = "&#" + (y0 + 64090).ToString() + ";";
-                string minMaxStr = "<span style=\"font-family:sans-serif;font-size:14\">&nbsp;[" + Min.ToString() + "," + Max.ToString() + "] </span>";
+                string minMaxStr = "<span class=text-min-max> [" + Min.ToString() + "," + Max.ToString() + "] </span>";
+                if (GenerateText)
+                    sparklineStr = sparklineStr + "<span class=sparkline-stop>" + charStr + "</span>" + stopStr +minMaxStr;
+                else
+                    sparklineStr = sparklineStr + "<span class=sparkline-stop>" + charStr + "</span>";
 
-                sparklineStr = sparklineStr + "<span style=\"color:" + StartColor + "\">" + charStr + "</span>" + stopStr +minMaxStr;
-
-                //sparklineStr = sparklineStr + "&#" + (y0 + 64090).ToString(); //stop     
             }
             return sparklineStr;
         }

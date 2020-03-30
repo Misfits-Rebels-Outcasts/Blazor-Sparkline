@@ -2,7 +2,7 @@
     This file is to show how CSS and other static resources (such as images) can be
     used from a library project/package.
 */
-
+/*
 .my-component {
     border: 2px dashed red;
     padding: 1em;
@@ -38,6 +38,7 @@ figure {
     padding-right: 15px;
     align-self: flex-start;
 }
+*/
 
 @font-face {
     font-family: ColumnBars;
@@ -50,11 +51,39 @@ figure {
     line-height: normal;
     font-family: 'ColumnBars', sans-serif;
     font-size: 18px;
-    animation: pulse;
-    animation-duration: 0.01s;
-    animation-iteration-count: 1;
 }
 
+.ColumnBars .bar-first{    
+    color:#757e86
+}
+
+.ColumnBars .bar{    
+    color:#000000
+}
+
+.ColumnBars .bar-last{    
+    color:#000000
+}
+
+.ColumnBars .text-start{    
+    font-family:sans-serif;
+    font-size:18px;
+    color:#000000;
+}
+
+.ColumnBars .text-stop{    
+    font-family:sans-serif;
+    font-size:18px;
+    color:#000000
+}
+
+.ColumnBars .text-min-max{    
+    font-family:sans-serif;
+    font-size:18px;
+    color:#000000
+}
+
+/*
 @keyframes pulse {
     0% {
         font-size: 0px;
@@ -64,3 +93,4 @@ figure {
         font-size: 18px;
     }
 }
+*/

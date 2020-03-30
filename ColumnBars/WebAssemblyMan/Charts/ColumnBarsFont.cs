@@ -10,27 +10,43 @@ using System.Threading.Tasks;
 
 namespace WebAssemblyMan.Charts
 {
-  public class ColumnBars
+  public class ColumnBarsFont
   {
         public string InputData { get; set; }
         public string Actual { get; set; }
         public string Target { get; set; }
-
+        public bool GenerateText {get; set;}
         public double Min { get; set; }
         public double Max { get; set; }
         public int NumLines { get; set; }
         public string[] result;
 
-        public ColumnBars() { }
-        public string[] Encode()
+        public ColumnBarsFont() { }
+        public string Encode()
         {
             //Add verification code in the future for all parameters
             //Or maybe change width etc.. to a number
-            DrawColumnBars();            
-            return result;
-            //return sparklineStr;
-        }
+            //DrawColumnBars();            
 
+            //**********TODO***********
+            //'scaling 0 => Normal , 1 => Maps to 0 to 100, 2=> Maps to 0 to -100
+            int scaling=0;
+
+            int scaleVal;
+            scaleVal = -10;
+            if (scaling == 0)
+                scaleVal = -10;
+            else if (scaling == 1)
+                scaleVal = 0;
+            else if (scaling == 2)
+                scaleVal = 5;
+
+            return DrawColumnBar(InputData,scaleVal);
+                    
+            //return result;
+            //return columnBarStr;
+        }
+/*
         private void DrawColumnBars()
         {
             //not very optimal to be improved.
@@ -43,27 +59,27 @@ namespace WebAssemblyMan.Charts
             //'scaling 0 => Normal , 1 => Maps to 0 to 100, 2=> Maps to 0 to -100
             int scaling=0;
 
-            int scaleval;
-            scaleval = -10;
+            int scaleVal;
+            scaleVal = -10;
             if (scaling == 0)
-                scaleval = -10;
+                scaleVal = -10;
             else if (scaling == 1)
-                scaleval = 0;
+                scaleVal = 0;
             else if (scaling == 2)
-                scaleval = 5;
+                scaleVal = 5;
 
             foreach (string inputLine in inputDataArr)
             {
                 if (inputLine.IndexOfAny(new char[] { '0', '1','2','3','4','5','6','7','8','9' }) >= 0)
                 {
                     //string sparkStr = DrawBulletBar(inputLine);
-                    string sparkStr = DrawColumnBar(inputLine,scaleval);
+                    string sparkStr = DrawColumnBar(inputLine,scaleVal);
                     
                     result[x++] = sparkStr;
                 }
             }            
         }
-
+*/
         int SparkBarsApplyFontSet(int mapchar, int fontset, int shiftZero)
         {
         //'original mapchar is from 0 to 200
@@ -77,7 +93,7 @@ namespace WebAssemblyMan.Charts
             
         //'E000 to E0C8
         mapchar = 0xE000 + mapchar;
-                            Console.WriteLine("mapchar:"+mapchar);
+        Console.WriteLine("mapchar:"+mapchar);
 
         }
         //'origin at 20% ... 160 (Set 1)
@@ -230,7 +246,7 @@ namespace WebAssemblyMan.Charts
         //private int colorCounter=0;
         private string DrawColumnBar(string inputLine,int fontset)
         {
-            string sparklineStr = "";
+            string columnBarStr = "";
             string[] inputDataArr = inputLine.Split(',');
             double minValue=double.MaxValue;
             double maxValue=double.MinValue;
@@ -253,6 +269,9 @@ namespace WebAssemblyMan.Charts
                 if (maxValue<val)
                     maxValue=val;
             }
+            Min=minValue;
+            Max=maxValue;
+
             if (fontset == -10) 
             {
     
@@ -355,20 +374,51 @@ namespace WebAssemblyMan.Charts
                 else if (actualFontset > 5)
                     actualFontset = 5;
 
+
                 for (int x = 0; x < inputDataArr.Length; x++)
                 {
                     int val = int.Parse(inputDataArr[x]);
+                    /*
                     Console.WriteLine("v:"+val);
                     Console.WriteLine("min:"+minValue);
                     Console.WriteLine("max:"+maxValue);
                     Console.WriteLine("af:"+actualFontset);
+                    */
                     int tempValue = SparkBarsValue(val, minValue, maxValue, actualFontset, 0, 0, 0, shiftZero);
                     Console.WriteLine(tempValue);
-                    string charStr = "<span style=color:#000000>"+"&#" + (tempValue).ToString() +";"+ "</span>";
-                    sparklineStr = sparklineStr+charStr;
+                    string barStr = "&#" + (tempValue).ToString() +";";
+                    //barStr = "<span style=color:#000000>"+"&#" + (tempValue).ToString() +";"+ "</span>";
+                    if (x==0)
+                    {
+                        if (GenerateText)
+                        {
+                            string startStr = "<span class=text-start>"+inputDataArr[x]+"&nbsp;</span>";
+                            barStr = startStr+barStr;
+                        }
+                        barStr = barStr+"<span class=bar-first>"+"&#" + (tempValue).ToString() +";"+ "</span>";
+                    }
+                    else if (x==inputDataArr.Length-1)
+                    {
+                        barStr = "<span class=bar-last>"+"&#" + (tempValue).ToString() +";"+ "</span>";
+                        if (GenerateText)
+                        {
+                            string stopStr = "<span class=text-stop>&nbsp;"+inputDataArr[x]+"</span>";
+                            barStr = barStr+stopStr;
+                        }
+                    }
+                    else
+                        barStr = "<span class=bar>"+"&#" + (tempValue).ToString() +";"+ "</span>";
+                    
+                    columnBarStr = columnBarStr+barStr;
+
+                }
+                if (GenerateText)
+                {
+                    string minMaxStr = "<span class=text-min-max>&nbsp;[" + Min.ToString() + "," + Max.ToString() + "] </span>";
+                    columnBarStr = columnBarStr+minMaxStr;
                 }
 
-            return sparklineStr;
+            return columnBarStr;
         }
 
 

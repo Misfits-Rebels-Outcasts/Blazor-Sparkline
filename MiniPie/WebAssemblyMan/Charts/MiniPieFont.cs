@@ -13,9 +13,11 @@ namespace WebAssemblyMan.Charts
   public class MiniPieFont
   {
         public string InputData { get; set; }
-
+        public bool GenerateText { get; set; }
         public int NumLines { get; set; }
         public string[] result;
+        public double Min { get; set; }
+        public double Max { get; set; }
 
         public MiniPieFont() { }
         public string Encode()
@@ -63,11 +65,27 @@ namespace WebAssemblyMan.Charts
             if (inputLen>6)
                 inputLen=6;
 
+            Min = double.MaxValue;
+            Max = double.MinValue;
+
             for (int x = 0; x < inputDataArr.Length; x++)
             {
                 Console.WriteLine("MiniPie:"+inputDataArr[x]);
                 int val;
                 bool isInt = int.TryParse(inputDataArr[x],out val);
+
+                if (x>0)
+                {
+                    double valP = double.Parse(inputDataArr[x-1]);
+                    double valC = double.Parse(inputDataArr[x]);
+                    double valD=valC-valP;
+                    if (Min > valD)
+                        Min = valD;
+                    if (Max < valD)
+                        Max = valD;
+
+                }
+
                 if (!isInt)
                     return "";
 
@@ -93,6 +111,13 @@ namespace WebAssemblyMan.Charts
             }
 
             miniPieStr = miniPieStr +"&#" + (105).ToString() + ";";
+
+            if (GenerateText)
+            {
+                string minMaxStr = "<span class=text-min-max> [" + Min.ToString() + "," + Max.ToString() + "] </span>";
+                miniPieStr = miniPieStr + minMaxStr;
+            }
+ 
             return miniPieStr;
         }
 
