@@ -18,7 +18,7 @@ v0.2
 
 [![MIT Licence](https://www.webassemblyman.com/images/mitlicense.png)](https://www.webassemblyman.com/MITLicense.txt)
 
-To use Sparkline
+### To use Sparkline
 
 1. Create your Blazor project.
 
@@ -33,10 +33,10 @@ To use Sparkline
 4. Finally, in Pages->Index.razor, add
 
 &lt;Sparkline <br />
-  InputData="[30,0,6,20,45,48,51,60,76,77,78,79,90,100,30,90,95,100,40,0,0,0],<br />[80,0,16,25,48,45,1,0,6,37,78,79,90,90,91,95,80,0,40,0,0,0]" <br />StartColor="#ce4b99" StopColor="#377bbc" SegmentWidth="30"><br />
+  InputData="[30,0,6,20,45,48,51,60,76,77,78,79,90,100,30,90,95,100,40,0,0,0],<br />[80,0,16,25,48,45,1,0,6,37,78,79,90,90,91,95,80,0,40,0,0,0]" SegmentWidth="30"><br />
 &lt;/Sparkline>
 
-To use Column Bars
+### To use Column Bars
 
 1. Create your Blazor project.
 
@@ -56,28 +56,28 @@ InputData="[21,30,111,114,140,158,206,249,262,266,285,340,428,81,206,249,262,440
 
 Similary
 
-To use Bullet Chart
+### To use Bullet Chart
 
 &lt;ProjectReference Include="../Blazor-Sparkline/BulletBars/BulletBars.csproj" />
 
 &lt;link href="_content/BulletBars/styles.css" rel="stylesheet" />
 
-&lt;BulletBars InputData="26,40,95,100" Actual="49" Target="53"  GenerateText="true">&lt;/BulletBars>
+&lt;BulletBars InputData="26,40,95,100" Actual="49" Target="53"  GenerateText="true"><br />&lt;/BulletBars>
 
-To use MiniPie
+### To use MiniPie
 
 &lt;ProjectReference Include="../Blazor-Sparkline/MiniPie/MiniPie.csproj" />
 
 &lt;link href="_content/MiniPie/styles.css" rel="stylesheet" />
 
-&lt;MiniPie InputData="26,40,95,100" GenerateText="true">&lt;/MiniPie>
+&lt;MiniPie InputData="26,40,95,100" GenerateText="true"><br />&lt;/MiniPie>
 
-To use Win Loss Draw
+### To use Win Loss Draw
 
 &lt;ProjectReference Include="../Blazor-Sparkline/WinLoss/WinLoss.csproj" />
 
 &lt;link href="_content/WinLoss/styles.css" rel="stylesheet" />
 
-&lt;WinLoss InputData="1,1,1,-1,1,1,1,0,1,-1,1,1,1,1,1,0,1,-1,1,1,1,1,0,0,0,1,1,1,0,1,1,-1,1,1,1,1" GenerateText="true">&lt;/WinLoss>
+&lt;WinLoss InputData="1,1,1,-1,1,1,1,0,1,-1,1,1,1,1,1,0,1,-1,1,1,1,1,0,0,0,1,1,1,0,1,1,-1,1,1,1,1" GenerateText="true"><br />&lt;/WinLoss>
 
 Alternatively, check out our [Misfits-Rebels-Outcasts/Blazor-Dashboard](https://github.com/Misfits-Rebels-Outcasts/Blazor-Dashboard) project on how to use this Blazor Sparkline component.
