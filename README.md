@@ -4,7 +4,7 @@ Sparkline Charts for Blazor using Fonts
 Open Source Sparkline Charts for Blazor and WebAssembly. It uses C#, HTML and CSS with minimal Javascript dependencies. 
 
 <p>
-<img width="206" height="106"  src=https://webassemblyman.com/blazor/images/blazorsparkline.png />
+<img width="358" height="550"  src=https://webassemblyman.com/blazor/images/blazorsparklines.png />
 </p>   
 
 Sparklines are typically used to display summary information and they commonly appear in multiple rows of a HTML table. 
@@ -14,11 +14,11 @@ The current font uses dots to draw each segment of the Sparkline and is useful w
 
 &num;elegantlysimple
 
-v0.1
+v0.2
 
 [![MIT Licence](https://www.webassemblyman.com/images/mitlicense.png)](https://www.webassemblyman.com/MITLicense.txt)
 
-To use the Sparkline
+To use Sparkline
 
 1. Create your Blazor project.
 
@@ -32,15 +32,11 @@ To use the Sparkline
 
 4. Finally, in Pages->Index.razor, add
 
-&lt;SparklineMan <br />
+&lt;Sparkline <br />
   InputData="[30,0,6,20,45,48,51,60,76,77,78,79,90,100,30,90,95,100,40,0,0,0],<br />[80,0,16,25,48,45,1,0,6,37,78,79,90,90,91,95,80,0,40,0,0,0]" <br />StartColor="#ce4b99" StopColor="#377bbc" SegmentWidth="30"><br />
-&lt;/SparklineMan>
+&lt;/Sparkline>
 
-To use the Column Bars
-
-<p>
-<img width="122" height="109"  src=https://webassemblyman.com/blazor/images/blazorcolumnbars.png />
-</p>   
+To use Column Bars
 
 1. Create your Blazor project.
 
@@ -54,8 +50,34 @@ To use the Column Bars
 
 4. Finally, in Pages->Index.razor, add
 
-&lt;ColumnBarsMan <br /> 
+&lt;ColumnBars <br /> 
 InputData="[21,30,111,114,140,158,206,249,262,266,285,340,428,81,206,249,262,440,158,206,249,262,266,285,340,428], <br />[27,29,95,216,228,242,287,362,369,372,380,433,479,206,249,262,114,540,558,206,249,362,266,285,340,428], <br />[21,30,111,114,140,158,206,249,262,266,285,340,428,81,206,249,262,440,158,206,249,262,266,285,340,428], <br />[27,29,95,216,228,242,287,362,369,372,380,433,479,206,249,262,114,540,558,206,249,362,266,285,340,428]">
-&lt;/ColumnBarsMan>
+&lt;/ColumnBars>
 
-Alternatively, check out our Elegantly Simple [Misfits-Rebels-Outcasts/Blazor-Dashboard](https://github.com/Misfits-Rebels-Outcasts/Blazor-Dashboard) project on how to use this Blazor Sparkline component.
+Similary
+
+To use Bullet Chart
+
+&lt;ProjectReference Include="../Blazor-Sparkline/BulletBars/BulletBars.csproj" />
+
+&lt;link href="_content/BulletBars/styles.css" rel="stylesheet" />
+
+&lt;BulletBars InputData="26,40,95,100" Actual="49" Target="53"  GenerateText="true">&lt;/BulletBars>
+
+To use MiniPie
+
+&lt;ProjectReference Include="../Blazor-Sparkline/MiniPie/MiniPie.csproj" />
+
+&lt;link href="_content/MiniPie/styles.css" rel="stylesheet" />
+
+&lt;MiniPie InputData="26,40,95,100" GenerateText="true">&lt;/MiniPie>
+
+To use Win Loss Draw
+
+&lt;ProjectReference Include="../Blazor-Sparkline/WinLoss/WinLoss.csproj" />
+
+&lt;link href="_content/WinLoss/styles.css" rel="stylesheet" />
+
+&lt;WinLoss InputData="1,1,1,-1,1,1,1,0,1,-1,1,1,1,1,1,0,1,-1,1,1,1,1,0,0,0,1,1,1,0,1,1,-1,1,1,1,1" GenerateText="true">&lt;/WinLoss>
+
+Alternatively, check out our [Misfits-Rebels-Outcasts/Blazor-Dashboard](https://github.com/Misfits-Rebels-Outcasts/Blazor-Dashboard) project on how to use this Blazor Sparkline component.
