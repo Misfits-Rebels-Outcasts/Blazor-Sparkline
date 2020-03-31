@@ -39,7 +39,10 @@ namespace WebAssemblyMan.Charts
 
             for (int x = 0; x < inputDataArr.Length; x++)
             {
-                double val = double.Parse(inputDataArr[x]);
+                //double val = double.Parse(inputDataArr[x]);
+                double val = 0;
+                double.TryParse(inputDataArr[x],out val);
+
                 if (val > 0)
                 {
                     numWin++;

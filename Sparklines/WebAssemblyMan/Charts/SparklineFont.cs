@@ -26,32 +26,8 @@ namespace WebAssemblyMan.Charts
         public SparklineFont() { }
         public string Encode()
         {
-            //Add verification code in the future for all parameters
-            //Or maybe change width etc.. to a number
             return DrawSparkline(InputData);
-            //return result;
-            //return sparklineStr;
         }
-/*
-        private void DrawSparklines()
-        {
-            //not very optimal to be improved.
-            string[] inputDataArr = InputData.Split(new char[] { '[', ']' }, StringSplitOptions.RemoveEmptyEntries);
-            result = new string[inputDataArr.Length];
-            NumLines = inputDataArr.Length;
-            int x = 0;
-           
-            foreach (string inputLine in inputDataArr)
-            {
-                if (inputLine.IndexOfAny(new char[] { '0', '1','2','3','4','5','6','7','8','9' }) >= 0)
-                {
-                    string sparkStr = DrawSparkline(inputLine);
-                    result[x++] = sparkStr;
-                }
-            }
-            
-        }
-*/
 
         private string[] inputDataArr;
         private string DrawSparkline(string inputLine)
@@ -62,7 +38,10 @@ namespace WebAssemblyMan.Charts
 
             for (int x = 0; x < inputDataArr.Length; x++)
             {
-                double val = double.Parse(inputDataArr[x]);
+                //double val = double.Parse(inputDataArr[x]);
+                double val=0;
+                double.TryParse(inputDataArr[x],out val);
+
                 if (min > val)
                     min = val;
                 if (max < val)
@@ -70,15 +49,19 @@ namespace WebAssemblyMan.Charts
             }
             Min = min;
             Max = max;
-            //Console.WriteLine("min:" + min);
-            //Console.WriteLine("max:" + max);
+
             for (int y = 0; y < inputDataArr.Length; y++)
             {
                 if (y < inputDataArr.Length - 1)
                 {
                     double pcy0 = 0, pcy1 = 0;
-                    pcy0 = double.Parse(inputDataArr[y]) / max * 100;
-                    pcy1 = double.Parse(inputDataArr[y + 1]) / max * 100;
+                    //pcy0 = double.Parse(inputDataArr[y]) / max * 100;
+                    //pcy1 = double.Parse(inputDataArr[y + 1]) / max * 100;
+                    double.TryParse(inputDataArr[y],out pcy0);
+                    pcy0=pcy0 / max * 100;
+                    double.TryParse(inputDataArr[y+1],out pcy1);
+                    pcy1=pcy1 / max * 100;
+
                     if (y == 0)
                         sparklineStr=drawLine(pcy0, pcy1, 0, sparklineStr,y);
                     else if (y + 1 == inputDataArr.Length - 1)
@@ -121,11 +104,6 @@ namespace WebAssemblyMan.Charts
                     if (firstTime)
                     {
                         firstTime = false;
-                        /*
-                        string startStr = "<span class=text-start>" + y0.ToString() + "&nbsp;&nbsp;</span>";
-                        string charStr = "&#" + (y0 + 64090).ToString() + ";";
-                        sparklineStr = sparklineStr+startStr+"<span class=sparkline-start>"+charStr+"</span>";
-                        */
 
                         string startStr = "<span class=text-start>" + inputDataArr[index].ToString() + "&nbsp;&nbsp;</span>";
                         string charStr = "&#" + (y0 + 64090).ToString() + ";";
@@ -156,7 +134,6 @@ namespace WebAssemblyMan.Charts
             //stop
             if (startStop == 1)
             {
-                //string stopStr = "<span class=text-stop>&nbsp;&nbsp;" + y0.ToString() + "&nbsp;</span>";
                 string stopStr = "<span class=text-stop>&nbsp;&nbsp;" + inputDataArr[index+1].ToString() + "&nbsp;</span>";                
                 string charStr = "&#" + (y0 + 64090).ToString() + ";";
                 string minMaxStr = "<span class=text-min-max> [" + Min.ToString() + "," + Max.ToString() + "] </span>";

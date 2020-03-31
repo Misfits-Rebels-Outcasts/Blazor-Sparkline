@@ -22,43 +22,14 @@ namespace WebAssemblyMan.Charts
         public MiniPieFont() { }
         public string Encode()
         {
-            //Add verification code in the future for all parameters
-            //Or maybe change width etc.. to a number
-            /*
-            DrawMiniPies();
-            return result;
-            */
             return DrawMiniPie(InputData);
-            //return miniPieStr;
         }
-/*
-        private void DrawMiniPies()
-        {
-            //not very optimal to be improved.
-            string[] inputDataArr = InputData.Split(new char[] { '[', ']' }, StringSplitOptions.RemoveEmptyEntries);
-            result = new string[inputDataArr.Length];
-            NumLines = inputDataArr.Length;
-            int x = 0;
-           
-            foreach (string inputLine in inputDataArr)
-            {
-                if (inputLine.IndexOfAny(new char[] { '0', '1','2','3','4','5','6','7','8','9' }) >= 0)
-                {
-                    string sparkStr = DrawMiniPie(inputLine);
-                    result[x++] = sparkStr;
-                }
-            }            
-        }
-*/
-        //private string[] colors = { "#ce4b99", "#27A844", "#377bbc","#fe2712", "#fc600a", "#fb9902","#fccc1a", "#fefe33", "#b2d732", "#66b032", "#347c98", "#0247fe", "#4424d6","#8601af","#c21460" };
-        //private string[] colors = { "#27A844", "#377bbc","#fe2712", "#fc600a", "#fb9902","#fccc1a", "#fefe33", "#b2d732", "#66b032", "#347c98", "#0247fe", "#4424d6","#8601af","#c21460" };
 
         private int segmentCounter=1;
 
         private string DrawMiniPie(string inputLine)
         {
             string[] inputDataArr = inputLine.Split(',');
-            //string miniPieStr = "<span style=color:#ce4b99>"+"&#" + (65).ToString() + ";"+ "</span>";
             segmentCounter=1;
             string miniPieStr = GetPieSegment(65);
             int inputLen=inputDataArr.Length;
@@ -71,14 +42,26 @@ namespace WebAssemblyMan.Charts
             for (int x = 0; x < inputDataArr.Length; x++)
             {
                 Console.WriteLine("MiniPie:"+inputDataArr[x]);
-                int val;
-                bool isInt = int.TryParse(inputDataArr[x],out val);
+
+                double valInput;
+                bool isDouble = double.TryParse(inputDataArr[x],out valInput);
+                int val=0;
+                if (isDouble)
+                    val=(int)Math.Round(valInput,MidpointRounding.AwayFromZero);
 
                 if (x>0)
                 {
-                    double valP = double.Parse(inputDataArr[x-1]);
-                    double valC = double.Parse(inputDataArr[x]);
+                    //double valP = double.Parse(inputDataArr[x-1]);
+                    double valP = 0;
+                    bool isDouble1=double.TryParse(inputDataArr[x-1],out valP);
+                    //double valC = double.Parse(inputDataArr[x]);
+                    double valC = 0;
+                    bool isDouble2=double.TryParse(inputDataArr[x],out valC);
+
                     double valD=valC-valP;
+                    if (isDouble1==false && isDouble2==false)
+                        valD=0;
+                        
                     if (Min > valD)
                         Min = valD;
                     if (Max < valD)
@@ -86,27 +69,17 @@ namespace WebAssemblyMan.Charts
 
                 }
 
-                if (!isInt)
-                    return "";
+                //if (!isInt)
+                //    return "";
 
                 if (val > 0 && val <100)
                 {
-                    /*
-                    string charStr = "<span style=color:"+colors[segmentCounter++]+">&#" + (GetRangeBase(val)).ToString() +";"+ "</span>";
-                    miniPieStr = miniPieStr +  charStr;                       
-                    */
                     miniPieStr = miniPieStr + GetPieSegment(GetRangeBase(val));
                 }
                 else if (val == 100)
                 {
-                    /*
-                    string charStr = "<span style=color:"+colors[segmentCounter++]+">&#" + (122).ToString() +";"+ "</span>";
-                    miniPieStr = miniPieStr +  charStr;                       
-                    */
                     miniPieStr = miniPieStr + GetPieSegment(122);
                 }
-                //if (segmentCounter>colors.Length-1)
-                //        segmentCounter=0;
 
             }
 
@@ -129,7 +102,6 @@ namespace WebAssemblyMan.Charts
 
         private string GetPieSegment(int fontValue)
         {
-            //return "<span style=color:"+colors[segmentCounter++]+">&#" + (fontValue).ToString() +";"+ "</span>";
             return "<span class=seg-"+(segmentCounter++).ToString()+">&#" + (fontValue).ToString() +";"+ "</span>";
         }
     }

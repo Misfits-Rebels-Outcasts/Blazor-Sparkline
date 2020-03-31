@@ -46,40 +46,6 @@ namespace WebAssemblyMan.Charts
             //return result;
             //return columnBarStr;
         }
-/*
-        private void DrawColumnBars()
-        {
-            //not very optimal to be improved.
-            string[] inputDataArr = InputData.Split(new char[] { '[', ']' }, StringSplitOptions.RemoveEmptyEntries);
-            result = new string[inputDataArr.Length];
-            NumLines = inputDataArr.Length;
-            int x = 0;
-           
-            //**********TODO***********
-            //'scaling 0 => Normal , 1 => Maps to 0 to 100, 2=> Maps to 0 to -100
-            int scaling=0;
-
-            int scaleVal;
-            scaleVal = -10;
-            if (scaling == 0)
-                scaleVal = -10;
-            else if (scaling == 1)
-                scaleVal = 0;
-            else if (scaling == 2)
-                scaleVal = 5;
-
-            foreach (string inputLine in inputDataArr)
-            {
-                if (inputLine.IndexOfAny(new char[] { '0', '1','2','3','4','5','6','7','8','9' }) >= 0)
-                {
-                    //string sparkStr = DrawBulletBar(inputLine);
-                    string sparkStr = DrawColumnBar(inputLine,scaleVal);
-                    
-                    result[x++] = sparkStr;
-                }
-            }            
-        }
-*/
         int SparkBarsApplyFontSet(int mapchar, int fontset, int shiftZero)
         {
         //'original mapchar is from 0 to 200
@@ -263,7 +229,11 @@ namespace WebAssemblyMan.Charts
             //determine min max
             for (int x = 0; x < inputDataArr.Length; x++)
             {
-                int val = int.Parse(inputDataArr[x]);
+                //int val = int.Parse(inputDataArr[x]);
+                //double val = double.Parse(inputDataArr[x]);
+                double val=0;
+                double.TryParse(inputDataArr[x],out val);
+                
                 if (minValue>val)
                     minValue=val;
                 if (maxValue<val)
@@ -377,17 +347,15 @@ namespace WebAssemblyMan.Charts
 
                 for (int x = 0; x < inputDataArr.Length; x++)
                 {
-                    int val = int.Parse(inputDataArr[x]);
-                    /*
-                    Console.WriteLine("v:"+val);
-                    Console.WriteLine("min:"+minValue);
-                    Console.WriteLine("max:"+maxValue);
-                    Console.WriteLine("af:"+actualFontset);
-                    */
-                    int tempValue = SparkBarsValue(val, minValue, maxValue, actualFontset, 0, 0, 0, shiftZero);
-                    Console.WriteLine(tempValue);
-                    string barStr = "&#" + (tempValue).ToString() +";";
-                    //barStr = "<span style=color:#000000>"+"&#" + (tempValue).ToString() +";"+ "</span>";
+                    //int val = int.Parse(inputDataArr[x]);
+                    //double val = double.Parse(inputDataArr[x]);
+                    double val=0;
+                    double.TryParse(inputDataArr[x],out val);
+
+                    int barVal = SparkBarsValue(val, minValue, maxValue, actualFontset, 0, 0, 0, shiftZero);
+                    Console.WriteLine(barVal);
+                    string barStr = "&#" + (barVal).ToString() +";";
+                    //barStr = "<span style=color:#000000>"+"&#" + (barVal).ToString() +";"+ "</span>";
                     if (x==0)
                     {
                         if (GenerateText)
@@ -395,11 +363,11 @@ namespace WebAssemblyMan.Charts
                             string startStr = "<span class=text-start>"+inputDataArr[x]+"&nbsp;</span>";
                             barStr = startStr+barStr;
                         }
-                        barStr = barStr+"<span class=bar-first>"+"&#" + (tempValue).ToString() +";"+ "</span>";
+                        barStr = barStr+"<span class=bar-first>"+"&#" + (barVal).ToString() +";"+ "</span>";
                     }
                     else if (x==inputDataArr.Length-1)
                     {
-                        barStr = "<span class=bar-last>"+"&#" + (tempValue).ToString() +";"+ "</span>";
+                        barStr = "<span class=bar-last>"+"&#" + (barVal).ToString() +";"+ "</span>";
                         if (GenerateText)
                         {
                             string stopStr = "<span class=text-stop>&nbsp;"+inputDataArr[x]+"</span>";
@@ -407,7 +375,7 @@ namespace WebAssemblyMan.Charts
                         }
                     }
                     else
-                        barStr = "<span class=bar>"+"&#" + (tempValue).ToString() +";"+ "</span>";
+                        barStr = "<span class=bar>"+"&#" + (barVal).ToString() +";"+ "</span>";
                     
                     columnBarStr = columnBarStr+barStr;
 

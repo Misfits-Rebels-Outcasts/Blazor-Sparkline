@@ -28,14 +28,12 @@ namespace WebAssemblyMan.Charts
             return DrawBulletBarActualTarget(InputData);
         }
 
-        //private string[] colors={"#7F7F7F","#A5A5A5","#BFBFBF","#D8D8D8","#F2F2F2"};
         private int segmentCounter=1;
         private string DrawHorizontalBar(string inputLine)
         {
             string bulletStr = "";
             string[] inputDataArr = inputLine.Split(',');
             int lastValue=62052;
-            //string charStr="";
             segmentCounter=0;
             for (int x = 0; x < inputDataArr.Length; x++)
             {
@@ -43,19 +41,12 @@ namespace WebAssemblyMan.Charts
                 Console.WriteLine("val:"+val);
                 if (val > 0 && val <=100)
                 {
-                    //bulletStr = bulletStr+"&#" + (GetRangeBase(val)).ToString() +";";
-                    //charStr = "<span style=color:"+colors[segmentCounter++]+">"+"&#" + (GetRangeBase(val)).ToString() +";"+ "</span>";
                     bulletStr = GetBarString(val,segmentCounter++)+bulletStr;
-                    //bulletStr = charStr+bulletStr;
-                    //if (segmentCounter>colors.Length-1)
-                    //    segmentCounter=0;
                     lastValue = val;
                 }
             }
 
-            //charStr = "<span style=color:"+colors[segmentCounter++]+">"+"&#" + (GetSpaceBase(lastValue)).ToString() +";"+ "</span>";
             bulletStr = bulletStr+GetSpaceString(lastValue);
-            //bulletStr = bulletStr+charStr;
 
             return bulletStr;
         }
@@ -65,77 +56,81 @@ namespace WebAssemblyMan.Charts
             string bulletStr = "";
             string[] inputDataArr = inputLine.Split(',');
             int lastValue=62052;
-            //string charStr="";
             segmentCounter=1;
-
+            bool isDouble=false;
             //Background Bars
             for (int x = 0; x < inputDataArr.Length; x++)
             {
-                int val = int.Parse(inputDataArr[x]);
+                //int val = int.Parse(inputDataArr[x]);
+                double valInput;
+                isDouble = double.TryParse(inputDataArr[x],out valInput);
+                int val=0;
+                if (isDouble)
+                    val=(int)Math.Round(valInput,MidpointRounding.AwayFromZero);
+
                 Console.WriteLine("val:"+val);
                 if (val > 0 && val <=100)
                 {
-                    //bulletStr = bulletStr+"&#" + (GetRangeBase(val)).ToString() +";";
-                    //charStr = "<span style=color:"+colors[segmentCounter++]+">"+"&#" + (GetRangeBase(val)).ToString() +";"+ "</span>";
                     bulletStr = GetBarString(val,segmentCounter++)+bulletStr;
-                    //if (segmentCounter>colors.Length-1)
-                    //    segmentCounter=0;
                     lastValue = val;
                 }
             }
 
             //Actual
-            int actual=int.Parse(Actual);
+            //int actual=int.Parse(Actual);
+            double actualD=0;
+            isDouble = double.TryParse(Actual,out actualD);
+            int actual=0;
+            if (isDouble)
+                actual=(int)Math.Round(actualD,MidpointRounding.AwayFromZero);
+
             if ((actual > 0) && (actual <= 100)) 
             {
                 //Find the largest space
                 if (lastValue < actual) 
                     lastValue = actual;
-                //charStr = "<span style=color:#000000>"+"&#" + (GetActualBase(actual)).ToString() +";"+ "</span>";
+
                 bulletStr = bulletStr + GetActualString(actual);
             }
             else if (actual <= 0) 
             {
                 //'Use the minimun
-                //charStr = "<span style=color:#000000>"+"&#" + (GetActualBase(1)).ToString() +";"+ "</span>";
                 bulletStr = bulletStr + GetActualString(1);
             }
             else if (actual > 100) 
             {
                 //'Use the maximun
-                //charStr = "<span style=color:#000000>"+"&#" + (GetActualBase(100)).ToString() +";"+ "</span>";
                 bulletStr = bulletStr + GetActualString(100);
                 lastValue = 100;
             }
         
             //Target
             //Find the largest space
-            int target=int.Parse(Target);
+            //int target=int.Parse(Target);
+            double targetD=0;
+            isDouble = double.TryParse(Target,out targetD);
+            int target=0;
+            if (isDouble)
+                target=(int)Math.Round(targetD,MidpointRounding.AwayFromZero);
+
             if ((target > 0) && (target <= 100))
             {
                 if (lastValue < target) 
                     lastValue = target;
-                //charStr = "<span style=color:#000000>"+"&#" + (GetTargetBase(target)).ToString() +";"+ "</span>";
                 bulletStr = bulletStr + GetTargetString(target);
-                //newStrX = newStrX + VBA.ChrW(GetTargetBase(targetRange.Cells(1, 1)))
             }
             else if (target <= 0) 
             {
                 //'Use the minimun
-                //charStr = "<span style=color:#000000>"+"&#" + GetTargetBase(1).ToString() +";"+ "</span>";
                 bulletStr = bulletStr + GetTargetString(1);
-                //newStrX = newStrX + VBA.ChrW(GetTargetBase(1))
             }
             else if (target > 100) 
             {
                 //'Use the maximun
-                //charStr = "<span style=color:#000000>"+"&#" + GetTargetBase(100).ToString() +";"+ "</span>";
                 bulletStr = bulletStr + GetTargetString(100);
-                //newStrX = newStrX + VBA.ChrW(GetTargetBase(100))
                 lastValue = 100;
             }
             
-            //charStr = "<span style=color:"+colors[segmentCounter++]+">"+"&#" + (GetSpaceBase(lastValue)).ToString() +";"+ "</span>";            
             bulletStr = bulletStr+GetSpaceString(lastValue);
             if (GenerateText)
                 bulletStr = bulletStr+GetActualTargetText();            
@@ -150,7 +145,6 @@ namespace WebAssemblyMan.Charts
 
         private string GetSpaceString(int percentValue)
         {
-            //return "<span class=bar-space>"+"&#" + GetSpaceBase(percentValue).ToString() +";"+ "</span>";
             return "&#" + GetSpaceBase(percentValue).ToString() +";";
         }
 

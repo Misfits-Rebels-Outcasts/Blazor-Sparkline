@@ -30,28 +30,10 @@ namespace WebAssemblyMan
             winLossFont.GenerateText=GenerateText;
             winLossOutput = winLossFont.Encode();
 
-
             builder.OpenElement(++seq, "span");
             builder.AddAttribute(++seq, "class", "WinLoss");
             builder.AddMarkupContent(++seq, winLossOutput);
             builder.CloseElement();
-
-/*
-            builder.OpenElement(seq, "figure");
-            builder.OpenElement(++seq, "div");
-            builder.AddAttribute(++seq, "class", "winloss-main");
-
-            foreach (string sline in winLossOutput)
-            {
-                builder.OpenElement(++seq, "span");
-                builder.AddAttribute(++seq, "class", "WinLoss");
-                string slineu = sline + "<br />";
-                builder.AddMarkupContent(++seq, slineu);
-                builder.CloseElement();
-            }
-            builder.CloseElement();
-            builder.CloseElement();
-*/
 
         }
     }

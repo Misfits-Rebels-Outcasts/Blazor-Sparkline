@@ -42,27 +42,6 @@ namespace WebAssemblyMan
             builder.AddMarkupContent(++seq, bulletBarOutput);
             builder.CloseElement();
 
-/*
-            builder.OpenElement(seq, "figure");
-            builder.OpenElement(++seq, "div");
-            builder.AddAttribute(++seq, "class", "bulletbars-main");
-
-            //string startStr = "<span style=\"font-family:sans-serif;font-size:16\">"+inputDataArr[0]+ "</span>&nbsp;" + sparklineStr + " &nbsp;" + "&nbsp;<span style=\"font-family:sans-serif;font-size:16\">" + inputDataArr[inputDataArr.Length-1]+"</span>"+ "&nbsp;";
-            //sparklineStr = sparklineStr + "<span style=\"font-family:sans-serif;font-size:14\">&nbsp;[" + min.ToString() + "," + max.ToString() + "] </span><br />";
-
-            foreach (string sline in bulletBarOutput)
-            {
-
-                builder.OpenElement(++seq, "span");
-                builder.AddAttribute(++seq, "class", "BulletBars");
-                string slineu = sline + "<br />";
-                builder.AddMarkupContent(++seq, slineu);
-                builder.CloseElement();
-            }
-            builder.CloseElement();
-            builder.CloseElement();
-*/
-
         }
     }
 }
