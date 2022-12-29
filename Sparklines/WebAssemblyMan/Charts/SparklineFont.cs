@@ -58,10 +58,16 @@ namespace WebAssemblyMan.Charts
                     //pcy0 = double.Parse(inputDataArr[y]) / max * 100;
                     //pcy1 = double.Parse(inputDataArr[y + 1]) / max * 100;
                     double.TryParse(inputDataArr[y],out pcy0);
-                    pcy0=pcy0 / max * 100;
                     double.TryParse(inputDataArr[y+1],out pcy1);
-                    pcy1=pcy1 / max * 100;
-
+                    if (max == 0)
+                    {
+                        // this avoids a divide by zero in the pcy0 and pcy1 calcs if all values are zero (i.e. max == 0)
+                        pcy0 = 50;
+                        pcy1 = 50;
+                    } else { 
+                        pcy0=pcy0 / max * 100;
+                        pcy1=pcy1 / max * 100;
+                    }
                     if (y == 0)
                         sparklineStr=drawLine(pcy0, pcy1, 0, sparklineStr,y);
                     else if (y + 1 == inputDataArr.Length - 1)
